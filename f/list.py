@@ -1,8 +1,7 @@
-from typing import TypeVar, Callable, Iterator, Tuple, cast, Generator, Set, Type, Any
+from typing import TypeVar, Callable, Iterator, Tuple, Generic, Set
 from functools import reduce
-from f.monoid import Monoid, append
+from f.monoid import Monoid
 from f.monad import Monad
-from .functor import Functor, Generic
 from .util import Unary, Predicate
 
 A = TypeVar('A')
@@ -14,6 +13,10 @@ class List(Monad, Monoid[A], Generic[A]):
     def empty() -> 'List[A]':
         t = set()  # type: Set[A]
         return List(v for v in t)
+
+    @staticmethod
+    def pure(value: A) -> 'List[A]':
+        return List(i for i in (value,))
 
     def __or__(self, f: Unary[A, B]) -> 'List[B]':
         return self.map(f)
@@ -57,7 +60,7 @@ class List(Monad, Monoid[A], Generic[A]):
 
     @property
     def head(self) -> A:
-        return self.values[0]
+        return self.values[0] if self.values else None
 
     def __reversed__(self) -> 'List[A]':
         return self.reverse
@@ -78,6 +81,9 @@ class List(Monad, Monoid[A], Generic[A]):
 
     def __matmul__(self, other: 'List[List[A]]') -> 'List[A]':
         return self.concat(other)
+
+    def __eq__(self, other) -> bool:
+        return isinstance(other, List) and self.values == other.values
 
     @property
     def values(self) -> Tuple[A, ...]:

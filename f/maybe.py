@@ -10,8 +10,8 @@ N = TypeVar('N')
 
 class Maybe(Monad, Generic[V], Functor[V], ABC):
 
-    @classmethod
-    def pure(cls, value: V) -> 'Maybe[V]':
+    @staticmethod
+    def pure(value: V) -> 'Maybe[V]':
         return Just(value)
 
     @abstractmethod
@@ -20,7 +20,6 @@ class Maybe(Monad, Generic[V], Functor[V], ABC):
 
     def __rshift__(self, f: 'Unary[V, Maybe[N]]') -> 'Maybe[N]':
         return self.bind(f)
-
 
     def skip(self, n: 'Maybe[N]') -> 'Maybe[N]':
         return n
@@ -60,12 +59,10 @@ class Just(Maybe[V], Generic[V]):
 class Nothing(Maybe):
 
     def bind(self, _) -> Maybe:
-        return self 
+        return self
 
     def map(self, _) -> Maybe:
         return Nothing()
 
     def __repr__(self):
         return "Nothing"
-
-

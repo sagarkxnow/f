@@ -1,5 +1,4 @@
-from functools import reduce
-from typing import TypeVar, Generic, Sequence
+from typing import TypeVar, Generic, Sequence  # pylint: disable = W0611
 from abc import ABC, abstractstaticmethod, abstractmethod
 
 M = TypeVar('M')

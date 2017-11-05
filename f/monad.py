@@ -1,11 +1,11 @@
-from abc import ABC, abstractclassmethod, abstractmethod
-from f.applicative import Applicative
+from abc import ABC, abstractstaticmethod, abstractmethod
 
 
 class Monad(ABC):
     # todo: improve typing here
-    @abstractclassmethod
-    def pure(cls, value):
+    @staticmethod
+    @abstractstaticmethod
+    def pure(value):
         raise NotImplementedError()
 
     @abstractmethod

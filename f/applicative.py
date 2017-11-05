@@ -1,13 +1,13 @@
-from abc import ABC, abstractclassmethod, abstractmethod
+from abc import ABC, abstractstaticmethod, abstractmethod
 from f.functor import Functor
 
 
 class Applicative(Functor, ABC):
-    @abstractclassmethod
-    def pure(cls, value):
+    @abstractstaticmethod
+    def pure(value):
         raise NotImplementedError()
 
-    @abstractclassmethod
+    @abstractmethod
     def apply(self, f):
         raise NotImplementedError()
 

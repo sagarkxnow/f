@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Callable, NamedTuple, Any, Type
+from typing import TypeVar, Callable, NamedTuple, Any, Type
 
 A = TypeVar('A')
 B = TypeVar('B')

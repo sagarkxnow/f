@@ -7,14 +7,13 @@ C = TypeVar('C')
 N = TypeVar('N')
 
 
-
 class Reader(Monad,
              Generic[C, V]):
     def __init__(self, f: Unary[C, V]) -> None:
         self._f = f
 
-    @classmethod
-    def pure(cls, value: V) -> 'Reader[C, V]':
+    @staticmethod
+    def pure(value: V) -> 'Reader[C, V]':
         return Reader(lambda _: value)
 
     @staticmethod
@@ -37,7 +36,7 @@ class Reader(Monad,
     def map(self, f: Unary[V, N]) -> 'Reader[C, N]':
         return Reader(compose(f, self._f))
 
-    # todo: find a way to move this to Functor without breaking client
+    # todo: find a way to move this to Monad without breaking client
     # type inference
     def skip(self, n: 'Reader[C, N]') -> 'Reader[C, N]':
         return self.bind(lambda _: n)
@@ -49,3 +48,7 @@ class Reader(Monad,
     # inference
     def __rshift__(self, f: 'Unary[V, Reader[C, N]]') -> 'Reader[C, N]':
         return self.bind(f)
+
+    def __eq__(self, other) -> bool:
+        return (isinstance(other, Reader) and
+                self._f.__code__.co_code == other._f.__code__.co_code)
