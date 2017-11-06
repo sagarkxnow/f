@@ -1,4 +1,4 @@
-from typing import TypeVar, Callable, Iterator, Tuple, Generic, Set
+from typing import TypeVar, Callable, Iterator, Tuple, Generic, Set, Collection
 from functools import reduce
 from f.monoid import Monoid
 from f.monad import Monad
@@ -8,7 +8,7 @@ A = TypeVar('A')
 B = TypeVar('B')
 
 
-class List(Monad, Monoid[A], Generic[A]):
+class List(Monad, Monoid[A], Generic[A], Collection[A]):
     @staticmethod
     def empty() -> 'List[A]':
         t = set()  # type: Set[A]
@@ -24,7 +24,7 @@ class List(Monad, Monoid[A], Generic[A]):
     def append(self, m: 'List[A]') -> 'List[A]':
         return List(v for v in self.values + m.values)
 
-    def __contains__(self, x: A) -> bool:
+    def __contains__(self, x) -> bool:
         return x in self.values
 
     def __add__(self, other: 'List[A]') -> 'List[A]':
