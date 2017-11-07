@@ -49,6 +49,6 @@ class Reader(Monad,
     def __rshift__(self, f: 'Unary[V, Reader[C, N]]') -> 'Reader[C, N]':
         return self.bind(f)
 
-    def __eq__(self, other) -> bool:
-        return (isinstance(other, Reader) and
-                self._f.__code__.co_code == other._f.__code__.co_code)
+
+def test() -> Reader[str, int]:
+    return Reader.pure(1)

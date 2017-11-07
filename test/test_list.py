@@ -11,6 +11,11 @@ class TestList(MonadTest, MonoidTest):
     def test_left_append_identity_law(self, l):
         assert List.empty() + l == l
 
+    @given(lists_(anything()), integers(min_value=0))
+    def test_getitem(self, l, index):
+        assume(index < len(l))
+        assert l[index] == l[index]
+
     @given(lists())
     def test_right_append_identity_law(self, l):
         assert l + List.empty() == l

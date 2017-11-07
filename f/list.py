@@ -48,6 +48,9 @@ class List(Monad, Monoid[A], Generic[A], Collection[A]):
     def __rshift__(self, f: 'Unary[A, List[B]]') -> 'List[B]':
         return self.bind(f)
 
+    def __getitem__(self, item):
+        return self.values[item]
+
     @property
     def reverse(self) -> 'List[A]':
         return List(reversed(self.values))
