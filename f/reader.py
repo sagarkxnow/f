@@ -49,6 +49,3 @@ class Reader(Monad,
     def __rshift__(self, f: 'Unary[V, Reader[C, N]]') -> 'Reader[C, N]':
         return self.bind(f)
 
-
-def test() -> Reader[str, int]:
-    return Reader.pure(1)
